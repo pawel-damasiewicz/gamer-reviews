@@ -6,12 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SearchControllerTest extends WebTestCase
 {
-    public function testSomething(): void
+    public function testSearchDisplaysSearchResult(): void
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/games/search?query=Cyberpunk');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('li', 'Cyberpunk');
+        $this->assertSelectorTextContains('h1', 'Search results for "Cyberpunk"');
     }
 }
