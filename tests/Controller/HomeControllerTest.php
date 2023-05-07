@@ -23,5 +23,6 @@ class HomeControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('input.search-input');
         $this->assertSelectorExists('button.search-button');
+        $this->assertSelectorTextContains('button.search-button', 'Search');
     }
 }
