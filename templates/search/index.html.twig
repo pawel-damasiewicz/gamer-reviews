@@ -9,6 +9,13 @@
 
 <div class="example-wrapper">
     <a class="home" href="{{ path('homepage') }}">Home</a>
+
     <h1>Search results for "{{ query }}"</h1>
+
+    <ul id="search-results">
+        {% for game in games %}
+            <li>{{ game.name }}</li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}
