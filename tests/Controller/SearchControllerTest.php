@@ -46,4 +46,13 @@ class SearchControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('li', 'Cyberpunk');
     }
+
+    public function testDisplayNoResultsWhenDoesNotExist(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/games/search?query=NonExistent');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h2', 'No results found');
+    }
 }
