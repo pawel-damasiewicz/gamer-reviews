@@ -12,10 +12,14 @@
 
     <h1>Search results for "{{ query }}"</h1>
 
-    <ul id="search-results">
-        {% for game in games %}
-            <li>{{ game.name }}</li>
-        {% endfor %}
-    </ul>
+    {% if games is empty %}
+        <h2>No results found</h2>
+    {% else %}
+        <ul id="search-results">
+            {% for game in games %}
+                <li>{{ game.name }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 </div>
 {% endblock %}
