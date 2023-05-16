@@ -5,6 +5,13 @@
 {% block body %}
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .search-link {
+        width: 100px;
+        background: #a5f0a5;
+        border: 1px solid;
+        padding: 3px;
+        border-radius: 5px;
+    }
 </style>
 
 <div class="example-wrapper">
@@ -13,4 +20,12 @@
     <input id="search-input" class="search-input" type="text"></input>
     <a id="search-link" class="search-link" href="">Search</a>
 </div>
+<script type="text/javascript">
+    let search = document.getElementById('search-link');
+    search.addEventListener('click', (event) => {
+        let input = document.getElementById('search-input');
+        let link = document.getElementById('search-link');
+        link.setAttribute('href', `/games/search?query=${input.value}`);
+    });
+</script>
 {% endblock %}
