@@ -4,4 +4,4 @@
 
 # Set up
 
-Follow instructions from ![symfony-docker](https://github.com/dunglas/symfony-docker)
+Follow instructions from [symfony-docker](https://github.com/dunglas/symfony-docker)
