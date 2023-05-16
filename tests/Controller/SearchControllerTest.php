@@ -60,7 +60,7 @@ class SearchControllerTest extends WebTestCase
         $gameId = $game->getId();
 
         $this->assertResponseIsSuccessful();
-        $this->assertEquals($crawler->filter('li > a')->attr('href'), '/games/' . $gameId);
+        $this->assertEquals('/games/' . $gameId, $crawler->filter('li > a')->attr('href'));
     }
 
     public function testShowMoreThanOneResultsWhenMatchesFound(): void
