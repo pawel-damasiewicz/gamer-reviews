@@ -72,4 +72,13 @@ class SearchControllerTest extends WebTestCase
 
         $this->assertEquals(3, $crawler->filter('li')->count());
     }
+
+    public function testSearchIsCaseInsensitive(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/games/search?query=cyberpunk');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertEquals(1, $crawler->filter('li')->count());
+    }
 }
