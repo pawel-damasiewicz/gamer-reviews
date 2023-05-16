@@ -16,7 +16,7 @@ class SearchController extends AbstractController
     {
         $query = $request->query->get('query');
 
-        $games = $entityManager->getRepository(Game::class)->findByName($query);
+        $games = $entityManager->getRepository(Game::class)->findByNameLike($query);
 
         return $this->render('search/index.html.twig', [
             'query' => $query,
