@@ -62,4 +62,14 @@ class SearchControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertEquals($crawler->filter('li > a')->attr('href'), '/games/' . $gameId);
     }
+
+    public function testShowMoreThanOneResultsWhenMatchesFound(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/games/search?query=Witcher');
+
+        $this->assertResponseIsSuccessful();
+
+        $this->assertEquals(3, $crawler->filter('li')->count());
+    }
 }
