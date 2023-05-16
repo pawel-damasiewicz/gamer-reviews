@@ -30,17 +30,6 @@ class SearchControllerTest extends WebTestCase
     public function testDisplaysASearchResultWhenExists(): void
     {
         $client = static::createClient();
-
-        $entityManager = static::getContainer()
-            ->get('doctrine')
-            ->getManager();
-
-        $game = new Game();
-        $game->setName('Cyberpunk');
-
-        $entityManager->persist($game);
-        $entityManager->flush();
-
         $crawler = $client->request('GET', '/games/search?query=Cyberpunk');
 
         $this->assertResponseIsSuccessful();
