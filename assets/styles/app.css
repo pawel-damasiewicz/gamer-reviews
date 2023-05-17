@@ -1,3 +1,65 @@
+:root {
+    --colour-palette-electric-blue: #00a8ff;
+    --colour-palette-neon-green: #39ff14;
+    --colour-palette-cyber-purple: #7f00ff;
+    --colour-palette-chrome-silver: #d9d9d9;
+    --colour-palette-laser-red: #ff001a;
+    --main-backgroudn-color: var(--colour-palette-chrome-silver);
+
+    --button-border-color: var(--colour-palette-cyber-purple);
+    --button-background-color: var(--colour-palette-electric-blue);
+
+    --input-background-color: var(--colour-palette-electric-blue);
+    --input-border-color: var(--colour-palette-cyber-purple);
+
+    --form-border-radius: 4px;
+}
+
 body {
-    background-color: lightgray;
+    background-color: var(--main-backgroudn-color);
+    color: var(--colour-palette-laser-red);
+}
+
+button {
+    background-color: var(--button-background-color);
+    border-color: var(--button-border-color);
+    border-radius: var(--form-border-radius);
+}
+
+input {
+    background-color: var(--input-background-color);
+    border-color: var(--input-border-color);
+    border-radius: var(--form-border-radius);
+}
+
+.example-wrapper {
+    margin: 1em auto;
+    max-width: 800px;
+    width: 95%;
+    font: 18px/1.5 sans-serif;
+}
+
+form {
+    position: relative;
+}
+
+.search-input {
+    width: 85%;
+    box-sizing: border-box;
+    position: absolute;
+    top: auto;
+    border-right: 0;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.search-button {
+    float: right;
+    width: 15%;
+    position: absolute;
+    top: auto;
+    right: 0;
+    border-left: 0;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
 }
