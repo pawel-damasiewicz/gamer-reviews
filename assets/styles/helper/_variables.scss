@@ -4,13 +4,13 @@ $color-cyber-purple: #7f00ff;
 $color-chrome-silver: #d9d9d9;
 $color-laser-red: #ff001a;
 
-$main-background-color: $color-chrome-silver; 
+$main-background-color: lighten($color-chrome-silver, 10%); 
 
 // Bootstrap overrides
 $body-bg: $main-background-color;
 
 $primary: $color-cyber-purple;
-$secondary: darken($color-chrome-silver, 20%);
+$secondary: $color-chrome-silver;
 $success: darken($color-neon-green, 50%);
 $info: $color-electric-blue;
 $warning: mix(
