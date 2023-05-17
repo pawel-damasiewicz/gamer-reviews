@@ -1,3 +1,6 @@
+###> vscode ###
+/.vscode
+###< cscode ###
 
 ###> symfony/framework-bundle ###
 /.env.local
