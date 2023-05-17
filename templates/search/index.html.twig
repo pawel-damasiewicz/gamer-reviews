@@ -3,8 +3,8 @@
 {% block title %}Game Search Results{% endblock %}
 
 {% block body %}
-<div class="container">
-    <a class="home" href="{{ path('app_homepage') }}">Home</a>
+<div class="container text-center">
+    {{ include('_navbar.html.twig') }}
 
     <h1>Search results for "{{ query }}"</h1>
 
