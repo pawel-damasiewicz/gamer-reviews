@@ -79,6 +79,6 @@ class SearchControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/games/search?query=cyberpunk');
 
         $this->assertResponseIsSuccessful();
-        $this->assertEquals(1, $crawler->filter('li')->count());
+        $this->assertEquals(1, $crawler->filter('div#search-results a.list-group-item')->count());
     }
 }
