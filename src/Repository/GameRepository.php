@@ -41,9 +41,15 @@ class GameRepository extends ServiceEntityRepository
 
     public function findByNameLike(?string $value): array
     {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.name like :val')
-            ->setParameter('val', '%' . $value . '%')
+        $lowercaseQuery = mb_strtolower($query);
+
+        $queryBuilder = $this->createQueryBuilder('g');
+
+        $queryBuilder->orWhere(sprintf('LOWER(%s.%s) LIKE :query_for_text', 'g', 'name'))
+            ->setParameter('query_for_text', '%' . $lowercaseQuery . '%');
+        $queryBuilder->orWhere(sprintf('LOWER(%s.%s) IN (:query_as_words)', 'g', 'name'))
+            ->setParameter('query_as_words', explode(' ', $lowercaseQuery));
+        return $queryBuilder
             ->orderBy('g.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
