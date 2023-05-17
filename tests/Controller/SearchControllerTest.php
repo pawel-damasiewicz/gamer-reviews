@@ -33,7 +33,7 @@ class SearchControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/games/search?query=Cyberpunk');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('li', 'Cyberpunk');
+        $this->assertSelectorTextContains('a h5', 'Cyberpunk');
     }
 
     public function testDisplayNoResultsWhenDoesNotExist(): void
@@ -60,7 +60,7 @@ class SearchControllerTest extends WebTestCase
         $gameId = $game->getId();
 
         $this->assertResponseIsSuccessful();
-        $this->assertEquals('/games/' . $gameId, $crawler->filter('li > a')->attr('href'));
+        $this->assertEquals('/games/' . $gameId, $crawler->filter('div#search-results a')->attr('href'));
     }
 
     public function testShowMoreThanOneResultsWhenMatchesFound(): void
@@ -70,7 +70,7 @@ class SearchControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $this->assertEquals(3, $crawler->filter('li')->count());
+        $this->assertEquals(3, $crawler->filter('a.list-group-item')->count());
     }
 
     public function testSearchIsCaseInsensitive(): void
