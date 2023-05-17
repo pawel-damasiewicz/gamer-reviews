@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Game;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends ServiceEntityRepository<Game>
@@ -39,7 +40,10 @@ class GameRepository extends ServiceEntityRepository
         }
     }
 
-    public function findByNameLike(?string $value): array
+    /**
+     * Simple searching game by name.
+     */
+    public function findByNameLike(string $query): array
     {
         $lowercaseQuery = mb_strtolower($query);
 
@@ -49,6 +53,7 @@ class GameRepository extends ServiceEntityRepository
             ->setParameter('query_for_text', '%' . $lowercaseQuery . '%');
         $queryBuilder->orWhere(sprintf('LOWER(%s.%s) IN (:query_as_words)', 'g', 'name'))
             ->setParameter('query_as_words', explode(' ', $lowercaseQuery));
+
         return $queryBuilder
             ->orderBy('g.id', 'ASC')
             ->setMaxResults(10)
