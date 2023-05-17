@@ -1,0 +1,24 @@
+$color-electric-blue: #00a8ff;
+$color-neon-green: #39ff14;
+$color-cyber-purple: #7f00ff;
+$color-chrome-silver: #d9d9d9;
+$color-laser-red: #ff001a;
+
+$main-background-color: $color-chrome-silver; 
+
+// Bootstrap overrides
+$body-bg: $main-background-color;
+
+$primary: $color-cyber-purple;
+$secondary: darken($color-chrome-silver, 20%);
+$success: darken($color-neon-green, 50%);
+$info: $color-electric-blue;
+$warning: mix(
+    lighten($color-laser-red, 25%),
+    yellow
+);
+$danger: $color-laser-red;
+$light: lighten($color-chrome-silver, 10%);
+$dark: darken($color-chrome-silver, 80%);
+
+$input-bg: $light;
