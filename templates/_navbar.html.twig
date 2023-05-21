@@ -16,6 +16,23 @@
                 <li class="nav-item">
                     <a class="nav-link active home" aria-current="page" href="{{ path('app_homepage') }}">Home</a>
                 </li>
+                {% if app.debug %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Bootstrap Color Check
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item bg-primary" href="#">Primary</a></li>
+                        <li><a class="dropdown-item bg-secondary" href="#">Secondary</a></li>
+                        <li><a class="dropdown-item bg-success" href="#">Success</a></li>
+                        <li><a class="dropdown-item bg-info" href="#">Info</a></li>
+                        <li><a class="dropdown-item bg-warning" href="#">Warning</a></li>
+                        <li><a class="dropdown-item bg-danger" href="#">Danger</a></li>
+                        <li><a class="dropdown-item bg-light" href="#">Light</a></li>
+                        <li><a class="dropdown-item bg-dark" href="#">Dark</a></li>
+                    </ul>
+                </li>
+                {% endif %}
             </ul>
             <form
                 method="get"

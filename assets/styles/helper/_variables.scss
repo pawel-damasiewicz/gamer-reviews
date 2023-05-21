@@ -1,24 +1,15 @@
-$color-electric-blue: #00a8ff;
-$color-neon-green: #39ff14;
-$color-cyber-purple: #7f00ff;
-$color-chrome-silver: #d9d9d9;
-$color-laser-red: #ff001a;
+$primary: #005B8D; // Using a darker shade of blue as the primary color
+$secondary: #C0C0C0; // Using Chrome Silver as the secondary color
+$success: #39FF14; // Using Neon Green as a success color
+$info: #00A8FF; // Using Electric Blue as an info color
+$warning: #FFB800; // Using a bright yellow-orange as the warning color
+$danger: #FF001A; // Using Laser Red as a danger color
+$light: #D9D9D9; // Using Chrome Silver as a light color
+$dark: #7F00FF; // Using Cyber Purple as a dark color
 
-$main-background-color: lighten($color-chrome-silver, 10%); 
+$main-background-color: $secondary; 
 
 // Bootstrap overrides
 $body-bg: $main-background-color;
-
-$primary: $color-cyber-purple;
-$secondary: $color-chrome-silver;
-$success: darken($color-neon-green, 50%);
-$info: $color-electric-blue;
-$warning: mix(
-    lighten($color-laser-red, 25%),
-    yellow
-);
-$danger: $color-laser-red;
-$light: lighten($color-chrome-silver, 10%);
-$dark: darken($color-chrome-silver, 80%);
 
 $input-bg: $light;
