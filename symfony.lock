@@ -11,6 +11,15 @@
             "config/packages/test/dama_doctrine_test_bundle.yaml"
         ]
     },
+    "doctrine/annotations": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.10",
+            "ref": "64d8583af5ea57b7afa4aba4b159907f3a148b05"
+        }
+    },
     "doctrine/doctrine-bundle": {
         "version": "2.9",
         "recipe": {
@@ -115,6 +124,27 @@
             "src/Controller/.gitignore",
             "src/Kernel.php"
         ]
+    },
+    "symfony/mailer": {
+        "version": "6.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.3",
+            "ref": "2bf89438209656b85b9a49238c4467bff1b1f939"
+        },
+        "files": [
+            "config/packages/mailer.yaml"
+        ]
+    },
+    "symfony/mailgun-mailer": {
+        "version": "6.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.4",
+            "ref": "addcb559b32d9dbb4843826b063565e1b15a2a57"
+        }
     },
     "symfony/maker-bundle": {
         "version": "1.48",
@@ -233,6 +263,9 @@
             "package.json",
             "webpack.config.js"
         ]
+    },
+    "symfonycasts/verify-email-bundle": {
+        "version": "v1.13.0"
     },
     "twig/extra-bundle": {
         "version": "v3.6.0"
