@@ -1,56 +1,84 @@
 <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{{ path('app_homepage') }}">Gamer Reviews</a>
-        <button class="navbar-toggler" 
-            type="button" 
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-        >
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active home" aria-current="page" href="{{ path('app_homepage') }}">Home</a>
-                </li>
-                {% if app.debug %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Bootstrap Color Check
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item bg-primary" href="#">Primary</a></li>
-                        <li><a class="dropdown-item bg-secondary" href="#">Secondary</a></li>
-                        <li><a class="dropdown-item bg-success" href="#">Success</a></li>
-                        <li><a class="dropdown-item bg-info" href="#">Info</a></li>
-                        <li><a class="dropdown-item bg-warning" href="#">Warning</a></li>
-                        <li><a class="dropdown-item bg-danger" href="#">Danger</a></li>
-                        <li><a class="dropdown-item bg-light" href="#">Light</a></li>
-                        <li><a class="dropdown-item bg-dark" href="#">Dark</a></li>
-                    </ul>
-                </li>
-                {% endif %}
-            </ul>
-            <form
-                method="get"
-                action="/games/search"
-                class="d-flex"
-                role="search"
-            >
-                <input
-                    type="search"
-                    id="search-input"
-                    class="form-control me-2 search-input"
-                    name="query"
-                    required="required"
-                    placeholder="Search"
-                    aria-label="Search"
-                >
-                <button type="submit" class="btn btn-outline-primary search-button">Search</button>
-            </form>
-        </div>
-    </div>
+	<div class="container-fluid">
+		<a class="navbar-brand" href="{{ path('app_homepage') }}">Gamer Reviews</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a class="nav-link active home" aria-current="page" href="{{ path('app_homepage') }}">Home</a>
+				</li>
+				{% if app.debug %}
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Bootstrap Color Check
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a class="dropdown-item bg-primary" href="#">Primary</a>
+							</li>
+							<li>
+								<a class="dropdown-item bg-secondary" href="#">Secondary</a>
+							</li>
+							<li>
+								<a class="dropdown-item bg-success" href="#">Success</a>
+							</li>
+							<li>
+								<a class="dropdown-item bg-info" href="#">Info</a>
+							</li>
+							<li>
+								<a class="dropdown-item bg-warning" href="#">Warning</a>
+							</li>
+							<li>
+								<a class="dropdown-item bg-danger" href="#">Danger</a>
+							</li>
+							<li>
+								<a class="dropdown-item bg-light" href="#">Light</a>
+							</li>
+							<li>
+								<a class="dropdown-item bg-dark" href="#">Dark</a>
+							</li>
+						</ul>
+					</li>
+				{% endif %}
+				{% if is_granted('ROLE_ADMIN') %}
+					<ul class="navbar-nav mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a href="{{ path('admin')}}" class="nav-link">Admin</a>
+						</li>
+					</ul>
+				{% endif %}
+
+			</ul>
+			<ul class="navbar-nav mb-2 mb-lg-0">
+				<li class="nav-item">
+					<form method="get" action="/games/search" class="d-flex form-inline" role="search">
+						<input type="search" id="search-input" class="form-control me-2 search-input" name="query" required="required" placeholder="Search" aria-label="Search">
+						<button type="submit" class="btn btn-outline-primary search-button me-2">Search</button>
+					</form>
+				</li>
+				{% if not app.user %}
+					<li class="nav-item">
+						<form method="get" action="{{ path('app_login') }}">
+							<button type="submit" class="btn btn-outline-primary me-2">Login</button>
+						</form>
+					</li>
+					<li class="nav-item">
+						<form method="get" action="{{ path('app_register') }}">
+							<button type="submit" class="btn btn-outline-primary">Sign Up</button>
+						</form>
+					</li>
+				{% endif %}
+				{% if app.user %}
+					<li class="nav-item">
+						<form action="{{ path('app_logout') }}" method="get">
+							<button class="btn btn-outline-primary me-2">Logout</button>
+						</form>
+					</li>
+				{% endif %}
+
+			</ul>
+		</div>
+	</div>
 </nav>
