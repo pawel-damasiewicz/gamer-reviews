@@ -38,20 +38,20 @@ COPY --from=php_extension_installer --link /usr/bin/install-php-extensions /usr/
 
 # persistent / runtime deps
 RUN apk add --no-cache \
-		acl \
-		fcgi \
-		file \
-		gettext \
-		git \
+	acl \
+	fcgi \
+	file \
+	gettext \
+	git \
 	;
 
 RUN set -eux; \
-    install-php-extensions \
-		apcu \
-		intl \
-		opcache \
-		zip \
-    ;
+	install-php-extensions \
+	apcu \
+	intl \
+	opcache \
+	zip \
+	;
 
 ###> recipes ###
 ###> doctrine/doctrine-bundle ###
@@ -89,10 +89,10 @@ COPY --from=composer --link /composer /usr/bin/composer
 # prevent the reinstallation of vendors at every changes in the source code
 COPY --link composer.* symfony.* ./
 RUN set -eux; \
-    if [ -f composer.json ]; then \
-		composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress; \
-		composer clear-cache; \
-    fi
+	if [ -f composer.json ]; then \
+	composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress; \
+	composer clear-cache; \
+	fi
 
 # copy sources
 COPY --link  . ./
@@ -100,12 +100,12 @@ RUN rm -Rf docker/
 
 RUN set -eux; \
 	mkdir -p var/cache var/log; \
-    if [ -f composer.json ]; then \
-		composer dump-autoload --classmap-authoritative --no-dev; \
-		composer dump-env prod; \
-		composer run-script --no-dev post-install-cmd; \
-		chmod +x bin/console; sync; \
-    fi
+	if [ -f composer.json ]; then \
+	composer dump-autoload --classmap-authoritative --no-dev; \
+	composer dump-env prod; \
+	composer run-script --no-dev post-install-cmd; \
+	chmod +x bin/console; sync; \
+	fi
 
 # Dev image
 FROM app_php AS app_php_dev
@@ -121,8 +121,8 @@ COPY --link docker/php/conf.d/app.dev.ini $PHP_INI_DIR/conf.d/
 
 RUN set -eux; \
 	install-php-extensions \
-    	xdebug \
-    ;
+	xdebug \
+	;
 
 RUN rm -f .env.local.php
 
