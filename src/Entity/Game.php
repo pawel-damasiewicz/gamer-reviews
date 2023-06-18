@@ -16,6 +16,9 @@ class Game
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(type: 'float', options: ['default' => 0])]
+    private ?float $trendingIndex = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +32,13 @@ class Game
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function setTrendingIndex(float $trendingIndex): self
+    {
+        $this->trendingIndex = $trendingIndex;
 
         return $this;
     }

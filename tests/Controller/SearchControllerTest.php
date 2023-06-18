@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SearchControllerTest extends WebTestCase
 {
-    public function testDisplaysSearchResult(): void
+    public function testDoesDisplaysSearchResult(): void
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/games/search?query=Cyberpunk');
@@ -17,7 +17,7 @@ class SearchControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'Search results for "Cyberpunk"');
     }
 
-    public function testDisplaysLinkToHome(): void
+    public function testDoesDisplaysLinkToHome(): void
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/games/search');
@@ -27,16 +27,16 @@ class SearchControllerTest extends WebTestCase
         $this->assertSelectorTextContains('a.home', 'Home');
     }
 
-    public function testDisplaysASearchResultWhenExists(): void
+    public function testDoesDisplaysASearchResultWhenExists(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/games/search?query=Cyberpunk');
+        $client->request('GET', '/games/search?query=Cyberpunk');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('a h5', 'Cyberpunk');
     }
 
-    public function testDisplayNoResultsWhenDoesNotExist(): void
+    public function testDoesDisplayNoResultsWhenDoesNotExist(): void
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/games/search?query=NonExistent');
@@ -45,7 +45,7 @@ class SearchControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h2', 'No results found');
     }
 
-    public function testSearchResultDoesLinkToGamePage(): void
+    public function testDoesSearchResultDoesLinkToGamePage(): void
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/games/search?query=Cyberpunk');
@@ -63,7 +63,7 @@ class SearchControllerTest extends WebTestCase
         $this->assertEquals('/games/' . $gameId, $crawler->filter('div#search-results a')->attr('href'));
     }
 
-    public function testShowMoreThanOneResultsWhenMatchesFound(): void
+    public function testDoesShowMoreThanOneResultsWhenMatchesFound(): void
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/games/search?query=Witcher');
@@ -73,7 +73,7 @@ class SearchControllerTest extends WebTestCase
         $this->assertEquals(3, $crawler->filter('a.list-group-item')->count());
     }
 
-    public function testSearchIsCaseInsensitive(): void
+    public function testDoesSearchIsCaseInsensitive(): void
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/games/search?query=cyberpunk');

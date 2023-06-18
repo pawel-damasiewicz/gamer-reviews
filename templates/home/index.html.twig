@@ -8,5 +8,25 @@
     <header class="row">
         <h1>Welcome to Gamer Reviews!</h1>
     </header>
+    <section>
+        <ul>
+            {% for game in games %}
+                <a href="/games/{{ game.id }}" class="list-group-item">
+                    <div class="mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-2">
+                                {# <img src="..." class="img-fluid rounded-start" alt="..."> #}
+                            </div>
+                            <div class="col-md-8">
+                                <h5 class="trending-game">
+                                    {{ game.name }}
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </ul>
+    </section>
 </div>
 {% endblock %}

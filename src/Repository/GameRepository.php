@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\Game;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends ServiceEntityRepository<Game>
@@ -50,14 +49,22 @@ class GameRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('g');
 
         $queryBuilder->orWhere(sprintf('LOWER(%s.%s) LIKE :query_for_text', 'g', 'name'))
-            ->setParameter('query_for_text', '%' . $lowercaseQuery . '%');
+                     ->setParameter('query_for_text', '%' . $lowercaseQuery . '%');
         $queryBuilder->orWhere(sprintf('LOWER(%s.%s) IN (:query_as_words)', 'g', 'name'))
-            ->setParameter('query_as_words', explode(' ', $lowercaseQuery));
+                     ->setParameter('query_as_words', explode(' ', $lowercaseQuery));
 
-        return $queryBuilder
-            ->orderBy('g.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult();
+        return $queryBuilder->orderBy('g.id', 'ASC')
+                            ->setMaxResults(10)
+                            ->getQuery()
+                            ->getResult();
+    }
+
+    public function findTrending(): array
+    {
+        return $this->createQueryBuilder('g')
+                    ->orderBy('g.trendingIndex', 'desc')
+                    ->setMaxResults(10)
+                    ->getQuery()
+                    ->getResult();
     }
 }
