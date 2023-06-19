@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Game;
+use App\Entity\Review;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -34,5 +35,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-star');
         yield MenuItem::section('Games');
         yield MenuItem::linkToCrud('Games', 'fa fa-tags', Game::class);
+        yield MenuItem::linkToCrud('Reviews', 'fa fa-tags', Review::class);
     }
 }
