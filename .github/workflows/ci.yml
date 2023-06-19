@@ -40,13 +40,6 @@ jobs:
         run: curl http://localhost
       - name: Check HTTPS reachability
         run: curl -k https://localhost
-  test:
-    name: Run tests
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
       - name: Run tests
-        run: docker compose run php ./bin/phpunit --stop-on-failure --no-interaction
+        run: docker compose run php ./bin/phpunit
 
