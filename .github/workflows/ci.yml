@@ -46,7 +46,8 @@ jobs:
         run: docker compose run php ./bin/console doctrine:migrations:migrate --env=test -n
       - name: Insert test fixtures
         run: docker compose run php ./bin/console doctrine:fixtures:load --env=test -n
-      - name: actions/setup-node@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
           node-version: '20'
       - name: Install node dependencies
