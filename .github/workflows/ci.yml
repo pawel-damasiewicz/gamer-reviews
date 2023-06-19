@@ -47,5 +47,5 @@ jobs:
       - name: Insert test fixtures
         run: docker compose run php ./bin/console doctrine:fixtures:load --env=test -n
       - name: Run tests
-        run: docker compose run php ./bin/phpunit
+        run: docker compose run php ./bin/phpunit --stop-on-failure --no-interaction
 
