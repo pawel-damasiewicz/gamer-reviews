@@ -8,26 +8,26 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SearchControllerTest extends WebTestCase
 {
-    public function testDoesDisplaysSearchResult(): void
+    public function testDoesDisplaySearchResult(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/games/search?query=Cyberpunk');
+        $client->request('GET', '/games/search?query=Cyberpunk');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Search results for "Cyberpunk"');
     }
 
-    public function testDoesDisplaysLinkToHome(): void
+    public function testDoesDisplayLinkToHome(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/games/search');
+        $client->request('GET', '/games/search');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('a[href="/"]');
         $this->assertSelectorTextContains('a.home', 'Home');
     }
 
-    public function testDoesDisplaysASearchResultWhenExists(): void
+    public function testDoesDisplayASearchResultWhenExists(): void
     {
         $client = static::createClient();
         $client->request('GET', '/games/search?query=Cyberpunk');
@@ -36,16 +36,16 @@ class SearchControllerTest extends WebTestCase
         $this->assertSelectorTextContains('a h5', 'Cyberpunk');
     }
 
-    public function testDoesDisplayNoResultsWhenDoesNotExist(): void
+    public function testDoesNotDisplayResultsWhenNotExist(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/games/search?query=NonExistent');
+        $client->request('GET', '/games/search?query=NonExistent');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h2', 'No results found');
     }
 
-    public function testDoesSearchResultDoesLinkToGamePage(): void
+    public function testDoesDisplayLinkToGamePage(): void
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/games/search?query=Cyberpunk');
@@ -73,7 +73,7 @@ class SearchControllerTest extends WebTestCase
         $this->assertEquals(3, $crawler->filter('a.list-group-item')->count());
     }
 
-    public function testDoesSearchIsCaseInsensitive(): void
+    public function testDoesPerformRegardlessOfLetterCase(): void
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/games/search?query=cyberpunk');
