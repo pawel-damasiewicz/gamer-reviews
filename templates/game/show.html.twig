@@ -8,5 +8,12 @@
     <header class="row">
         <h1>{{ game.name }}</h1>
     </header>
+    <section>
+      <ul id="reviews">
+        {% for review in game.reviews %}
+          <li>{{ review.content }}</li>
+        {% endfor %}
+      </ul>
+    </section>
 </div>
 {% endblock %}
