@@ -4,24 +4,26 @@ namespace App\Tests\Controller;
 
 use App\Entity\Game;
 use App\Entity\Review;
+use App\Repository\GameRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class GameControllerTest extends WebTestCase
 {
-    public function testDoesShowGameName(): void
+    public static function getRepository(): GameRepository
     {
-        $client = static::createClient();
         $entityManager = static::getContainer()
             ->get('doctrine')
             ->getManager();
 
-        $gameRepository = $entityManager->getRepository(Game::class);
+        return $entityManager->getRepository(Game::class);
+    }
 
-        /** @var Game $game */
-        $game = $gameRepository->findOneBy(['name' => 'Cyberpunk']);
+    public function testDoesShowGameName(): void
+    {
+        $client = static::createClient();
+        $game = static::getRepository()->findOneBy(['name' => 'Cyberpunk']);
 
         $client->request('GET', '/game/' . $game->getId());
-
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Cyberpunk');
@@ -34,16 +36,17 @@ class GameControllerTest extends WebTestCase
             ->get('doctrine')
             ->getManager();
 
-        $gameRepository = $entityManager->getRepository(Game::class);
-
-        $game = $gameRepository->findOneBy(['name' => 'Cyberpunk']);
-
         $review = new Review();
         $review->setContent('Test Review');
         $review->setRating(0.69);
 
+        $game = static::getRepository()->findOneBy(['name' => 'Cyberpunk']);
 
-        $game->addReview($review);
+        $review->setGame($game);
+
+        $entityManager->persist($review);
+        $entityManager->persist($game);
+        $entityManager->flush();
 
         $client->request('GET', '/game/' . $game->getId());
 
