@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GameController!{% endblock %}
+
+{% block body %}
+<div class="container text-center">
+    {{ include('_navbar.html.twig') }}
+    <header class="row">
+        <h1>{{ game.name }}</h1>
+    </header>
+</div>
+{% endblock %}
