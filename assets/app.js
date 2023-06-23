@@ -13,3 +13,5 @@ import './bootstrap';
 
 // import Bootstrap framework
 import 'bootstrap';
+
+import './main.jsx';

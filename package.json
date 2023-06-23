@@ -23,5 +23,11 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
+    },
+    "dependencies": {
+        "@solidjs/router": "^0.8.2",
+        "babel-preset-solid": "^1.7.4",
+        "solid-bootstrap": "^1.0.13",
+        "solid-js": "^1.7.6"
     }
 }
