@@ -13,7 +13,7 @@ class Review
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length:5000)]
+    #[ORM\Column(length: 5000)]
     private ?string $content = null;
 
     #[ORM\Column(type: 'float', options: ['default' => 0])]
