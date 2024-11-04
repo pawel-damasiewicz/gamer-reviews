@@ -1,3 +1,3 @@
-@import "helper/variables";
+@use "helper/variables";
 
-@import "~bootstrap";
+@forward "~bootstrap";
