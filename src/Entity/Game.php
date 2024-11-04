@@ -18,15 +18,23 @@ class Game
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(type: 'float', options: ['default' => 0])]
+    #[ORM\Column(
+        type: 'float',
+        nullable: true,
+        options: ['default' => 0]
+    )]
     private ?float $trendingIndex = null;
 
     #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'game')]
-    private $reviews;
+    private Collection $reviews;
+
+    #[ORM\ManyToMany(targetEntity: Genre::class, mappedBy: 'games')]
+    private Collection $genres;
 
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
+        $this->genres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -88,5 +96,32 @@ class Game
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection<int, Genre>
+     */
+    public function getGenres(): Collection
+    {
+        return $this->genres;
+    }
+
+    public function addGenre(Genre $genre): self
+    {
+        if (!$this->genres->contains($genre)) {
+            $this->genres->add($genre);
+            $genre->addGame($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGenre(Genre $genre): self
+    {
+        if ($this->genres->removeElement($genre)) {
+            $genre->removeGame($this);
+        }
+
+        return $this;
     }
 }
