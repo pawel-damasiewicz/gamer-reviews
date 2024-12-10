@@ -4,10 +4,10 @@
 
 # TODO
 
-- [ ] Docker compose
-    - [ ] PHP
-    - [ ] Nginx
-    - [ ] PostgreSQL
+- [x] Docker compose
+    - [x] PHP
+    - [x] Nginx
+    - [x] PostgreSQL
 
 # How to run project in DEV environment
 
