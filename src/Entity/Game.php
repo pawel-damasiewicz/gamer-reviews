@@ -7,6 +7,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
+/**
+ * Object containing basic information about game.
+ */
 #[ORM\Entity(repositoryClass: GameRepository::class)]
 class Game
 {
@@ -15,22 +19,27 @@ class Game
     #[ORM\Column]
     private ?int $id = null;
 
+    /**
+     * Full name of the game.
+     */
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(
-        type: 'float',
-        nullable: true,
-        options: ['default' => 0]
-    )]
-    private ?float $trendingIndex = null;
-
+    /**
+     * Collection of game reviews.
+     */
     #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'game')]
     private Collection $reviews;
 
+    /**
+     * List of generes that game belongs to.
+     */
     #[ORM\ManyToMany(targetEntity: Genre::class, mappedBy: 'games')]
     private Collection $genres;
 
+    /**
+     * Ensure that the related collections are always instantinated.
+     */
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
@@ -54,18 +63,6 @@ class Game
         return $this;
     }
 
-    public function setTrendingIndex(float $trendingIndex): self
-    {
-        $this->trendingIndex = $trendingIndex;
-
-        return $this;
-    }
-
-    public function getTrendingIndex(): float
-    {
-        return $this->trendingIndex;
-    }
-
     public function getReviews(): Collection
     {
         return $this->reviews;
@@ -83,13 +80,12 @@ class Game
 
     public function removeReview(Review $review): self
     {
-        if ($this->reviews->contains($review)) {
-            $this->reviews->removeElement($review);
+        if ($this->reviews->removeElement($review)) {
             if ($review->getGame() === $this) {
+                // @TODO: DELETE review, in order to avoid orphaned reviews?
                 $review->setGame(null);
             }
         }
-
         return $this;
     }
 
