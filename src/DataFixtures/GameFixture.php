@@ -12,22 +12,18 @@ class GameFixture extends Fixture
     {
         $game = new Game();
         $game->setName('Cyberpunk');
-        $game->setTrendingIndex(1);
         $manager->persist($game);
 
         $game = new Game();
         $game->setName('The Witcher');
-        $game->setTrendingIndex(0);
         $manager->persist($game);
 
         $game = new Game();
         $game->setName('The Witcher 2: Assasins of Kings');
-        $game->setTrendingIndex(0);
         $manager->persist($game);
 
         $game = new Game();
         $game->setName('The Witcher 3: Wild Hunt');
-        $game->setTrendingIndex(0.99);
         $manager->persist($game);
 
         $manager->flush();
