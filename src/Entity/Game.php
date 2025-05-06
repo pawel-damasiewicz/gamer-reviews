@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  * Object containing basic information about game.
  */
@@ -24,6 +23,12 @@ class Game
      */
     #[ORM\Column(length: 255)]
     private ?string $name = null;
+
+    /**
+     * Description of the game.
+     */
+    #[ORM\Column(length: 512, nullable: true)]
+    private ?string $description = null;
 
     /**
      * Collection of game reviews.
@@ -120,4 +125,17 @@ class Game
 
         return $this;
     }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
 }
+
