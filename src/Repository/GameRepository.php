@@ -62,7 +62,6 @@ class GameRepository extends ServiceEntityRepository
     public function findTrending(): array
     {
         return $this->createQueryBuilder('g')
-                    ->orderBy('g.trendingIndex', 'desc')
                     ->setMaxResults(10)
                     ->getQuery()
                     ->getResult();
