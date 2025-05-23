@@ -42,6 +42,9 @@ class Game
     #[ORM\ManyToMany(targetEntity: Genre::class, mappedBy: 'games')]
     private Collection $genres;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $steamAppId = null;
+
     /**
      * Ensure that the related collections are always instantinated.
      */
@@ -136,6 +139,18 @@ class Game
     public function getDescription(): ?string
     {
         return $this->description;
+    }
+
+    public function getSteamAppId(): ?string
+    {
+        return $this->steamAppId;
+    }
+
+    public function setSteamAppId(?string $steamAppId): static
+    {
+        $this->steamAppId = $steamAppId;
+
+        return $this;
     }
 }
 
