@@ -4,14 +4,16 @@ namespace App\Command;
 
 use App\Entity\Game;
 use App\Entity\SteamApp;
+use ArrayIterator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+
+use function Symfony\Component\DependencyInjection\Loader\Configurator\iterator;
 
 #[AsCommand(
     name: 'app:fetch-steam-apps',
@@ -45,18 +47,16 @@ class FetchSteamAppsCommand extends Command
 
         $io->note('Fetched steam app ids.');
 
-        $steamApps = $response->toArray()['applist']['apps'];
+        $steamApps = new ArrayIterator($response->toArray()['applist']['apps']);
 
         $io->note('Parsed steam app ids.');
 
-        $progressBar = new ProgressBar($output, count($steamApps));
-        $progressBar->start();
+        $io->progressStart($steamApps->count());
 
-        $batchSize = 50;
+        $batchSize = 100;
         $batchIndex = 0;
 
         foreach ($steamApps as $app) {
-            $batchIndex++;
             $steamApp = $this
                 ->entityManager
                 ->getRepository(SteamApp::class)
@@ -68,26 +68,27 @@ class FetchSteamAppsCommand extends Command
                 $this->entityManager->persist($steamApp);
             }
 
-            $name = $app['name'];
-            $game = $this->entityManager->getRepository(Game::class)->findOneBy(['name' => $name]);
+            $game = $this->entityManager->getRepository(Game::class)->findOneBy(['name' => $app['name']]);
             if ($game) {
                 $io->block(strval($game));
 
                 $game->setSteamAppId($app['appid']);
             }
 
-            if ($batchIndex >= $batchSize) {
-                $this->entityManager->flush();
-            }
+            $io->progressAdvance();
 
-            $progressBar->advance();
+            $batchIndex++;
+            if (($batchIndex % $batchSize) === 0) {
+                $this->entityManager->flush();
+                $this->entityManager->clear();
+            }
         }
 
         $this->entityManager->flush();
+        $this->entityManager->clear();
 
+        $io->progressFinish();
         $io->success('Success!');
-
-        $progressBar->finish();
 
         return Command::SUCCESS;
     }
