@@ -13,8 +13,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-use function Symfony\Component\DependencyInjection\Loader\Configurator\iterator;
-
 #[AsCommand(
     name: 'app:fetch-steam-apps',
     description: 'Fetch steam app ids, save them locally and assign app id to existing games.',
