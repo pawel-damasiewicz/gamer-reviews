@@ -2,14 +2,9 @@
 
 :warning: Work in progress
 
-# TODO
 
-- [x] Docker compose
-    - [x] PHP
-    - [x] Nginx
-    - [x] PostgreSQL
+## TODO
 
-# How to run project in DEV environment
-
-TODO
-
+- [ ]Fetch game info from steam
+  - [x] Command that fetches steam app ids and maps them to Game
+  - [ ] Alternative game names, ex. "The Witcher", "The Witcher: Enhanced Edition Director's Cut"
