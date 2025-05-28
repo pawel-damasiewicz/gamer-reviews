@@ -11,6 +11,8 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[AsCommand(
@@ -21,7 +23,8 @@ class FetchSteamAppsCommand extends Command
 {
     public function __construct(
         private HttpClientInterface $client,
-        private EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager,
+        private CacheInterface $cache
     ) {
         parent::__construct();
     }
@@ -31,22 +34,29 @@ class FetchSteamAppsCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $response = $this->client->request(
-            'GET',
-            'https://api.steampowered.com/ISteamApps/GetAppList/v2/'
+        $appsArray = $this->cache->get(
+            'get-app-list-v2',
+            function (ItemInterface $item) use ($io): array {
+                $item->expiresAfter(3600);
+
+                $response = $this->client->request(
+                    'GET',
+                    'https://api.steampowered.com/ISteamApps/GetAppList/v2/'
+                );
+                $io->note('Fetched steam app ids.');
+
+                if ($response->getStatusCode() != 200) {
+                    $io->error(sprintf(
+                        "Steam '/ISteamApps/GetAppList/v2' returned invalid status code %s",
+                        $response->getStatusCode()
+                    ));
+                }
+
+                return $response->toArray()['applist']['apps'];
+            }
         );
 
-        if ($response->getStatusCode() != 200) {
-            $io->error(sprintf(
-                "Steam '/ISteamApps/GetAppList/v2' returned invalid status code %s",
-                $response->getStatusCode()
-            ));
-        }
-
-        $io->note('Fetched steam app ids.');
-
-        $steamApps = new ArrayIterator($response->toArray()['applist']['apps']);
-
+        $steamApps = new ArrayIterator($appsArray);
         $io->note('Parsed steam app ids.');
 
         $io->progressStart($steamApps->count());
@@ -55,17 +65,6 @@ class FetchSteamAppsCommand extends Command
         $batchIndex = 0;
 
         foreach ($steamApps as $app) {
-            $steamApp = $this
-                ->entityManager
-                ->getRepository(SteamApp::class)
-                ->findOneBy(['appId' => $app['appid']]);
-            if (!$steamApp) {
-                $steamApp = new SteamApp();
-                $steamApp->setName($app['name']);
-                $steamApp->setAppId($app['appid']);
-                $this->entityManager->persist($steamApp);
-            }
-
             $game = $this->entityManager->getRepository(Game::class)->findOneBy(['name' => $app['name']]);
             if ($game) {
                 $io->block(strval($game));
