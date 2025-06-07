@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ReviewRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
 class Review
@@ -17,6 +18,8 @@ class Review
     private ?string $content = null;
 
     #[ORM\Column(type: 'float', options: ['default' => 0])]
+    #[Assert\LessThanOrEqual(5)]
+    #[Assert\GreaterThanOrEqual(0)]
     private ?float $rating = null;
 
     #[ORM\ManyToOne(targetEntity: Game::class, inversedBy: 'reviews')]
