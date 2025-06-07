@@ -3,7 +3,6 @@
 namespace App\Command;
 
 use App\Entity\Game;
-use App\Entity\SteamApp;
 use ArrayIterator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -65,6 +64,7 @@ class FetchSteamAppsCommand extends Command
         $batchIndex = 0;
 
         foreach ($steamApps as $app) {
+            /** @var Game $game */
             $game = $this->entityManager->getRepository(Game::class)->findOneBy(['name' => $app['name']]);
             if ($game) {
                 $io->block(strval($game));
